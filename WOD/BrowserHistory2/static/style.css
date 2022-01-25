@@ -1,0 +1,26 @@
+h1, h2 {
+    font-family: "Oswald";
+    width: 950;
+}
+
+p{
+    font-family: "Oswald", sans-serif;  
+    width: 950;
+}
+
+head{
+    color: Darkblue;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+body{
+    background-color: ivory;
+}
+
+span{
+    display: inline-block
+}
+
