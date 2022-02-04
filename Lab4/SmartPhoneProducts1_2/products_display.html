@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <script>
-        const store_name = 
+        var store_name = "Jordan's";
+        var hits = 1;
+        spins = 2;
+      
     </script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,9 +39,13 @@
 </head>
 <link rel="stylesheet" href="products-style.css">
 <body>
-    <h1><script>document.write("Jordan's");</script> Smart Phone Store</h1>
+    <h1><script>document.write(store_name);</script> Smart Phone Store</h1>
+    <p style="text-align: center; font-weight: bold;">
+        Hits:<span id="hits_span">0</span>
+        Spins:<span id="spins_span">0</span>
+        </p>
     <div><main>
-        <section class="item" onmouseover="this.className='item rotate'" onclick="this.className='item'">
+        <section class="item" onclick="hits_span.innerHTML = hits" onmouseover="spins_span.innerHTML = spins">
             <h2>HTC</h2>
             <p>&dollar;40.00</p>
             <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg">
@@ -61,6 +70,10 @@
             <p>&dollar;10.00</p>
         <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg">
     </main></div>
-    <footer><h1>Your One Stop Phone Shop</h1></footer>
+    <footer><h1>Your One Stop For Used Phones -- <script>document.write(store_name);</script></h1></footer>
 </body>
 </html>
+<script>
+         hits_span.innerHTML = hits;
+        spins_span.innerHTML = spins;
+</script>
