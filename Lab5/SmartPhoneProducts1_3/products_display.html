@@ -4,8 +4,8 @@
 
     <script>
         var store_name = "Jordan's";
-        var hits = 1;
-        spins = 2;
+        var hits = 0;
+        spins = 0;
         
     </script>
 
@@ -46,9 +46,10 @@ spins_span.innerHTML = spins;
     <p style="text-align: center; font-weight: bold;">
         Hits:<span id="hits_span">0</span>
         Spins:<span id="spins_span">0</span>
+        Hit/Spin:<span id="hit_spin_span">0</span>
         </p>
     <div><main>
-        <section class="item" onclick="hits_span.innerHTML = hits" onmouseover="spins_span.innerHTML = spins">
+        <section class="item" onclick="hits_span.innerHTML = ++hits; hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML);" onmouseover="spins++; spins_spans.innerHTML = spins">
             <h2>HTC</h2>
             <p>&dollar;40.00</p>
             <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg">
