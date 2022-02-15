@@ -46,3 +46,17 @@ p{
     transform: rotate(359deg);
   }
 }
+
+#firstname {
+  text-align: center;
+  font-size: 100px;
+  font-style: bold;
+  display: inline;
+}
+
+#lastname {
+  text-align: center;
+  font-size: 100px;
+  font-style: italic;
+  display: inline;
+}

@@ -6,6 +6,8 @@
         var store_name = "Jordan's";
         var hits = 0;
         var spins = 0;
+        var first_name = "Jordan";
+        var last_name = "Cooper";
         
     </script>
 
@@ -41,8 +43,13 @@
 <body onload="
 hits_span.innerHTML = hits;
 spins_span.innerHTML = spins;
-">
-    <h1><script>document.write(store_name);</script> Smart Phone Store</h1>
+"> 
+    <h1>    
+        <script>document.write('<p id="firstname">' + first_name + '</p>' + " " + '<p id="lastname">' + last_name + '</p>');</script>
+    <h1>
+        Smart Phone Store
+    </h1>
+
     <p style="text-align: center; font-weight: bold;">
         Hits:<span id="hits_span">0</span>
         Spins:<span id="spins_span">0</span>
@@ -74,8 +81,27 @@ spins_span.innerHTML = spins;
             <h2>Blackberry</h2>
             <p>&dollar;10.00</p>
         <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg">
+
+     
     </main></div>
-    <footer><h1>Your One Stop For Used Phones -- <script>document.write(store_name);</script></h1></footer>
+    <footer><h1>Your One Stop For Used Phones -- <script>document.write(store_name);</script></h1>
+    
+        <script>
+
+            line = 1;
+            date = new Date();
+            now = date.getFullYear();
+
+            document.write(`<table border="1" style="margin-left: auto; margin-right: auto; text-align: center;">`);
+                document.write(`<tr><th colspan="2"><h1>Your One Stop For Used Phones - ${first_name[0] + "." +  last_name[0] + "."} </h1></th></tr>`);
+                document.write(`<tr><td>${line + "."}</td><td><br />Copyright @ ${first_name + " " + last_name}</td></tr>`);
+                document.write(`<tr><td>${++line + "."}</td><td>${now}</td></tr>`);
+                document.write(`<tr><td>${++line + "."}</td><td>11:15 AM</td></tr>`);
+                document.write(`</table>`);
+            
+        </script>
+
+    </footer>
 </body>
 </html>
 <script>
