@@ -30,8 +30,8 @@
 
     //Product 5
     var item5 = 'Audi';
-    var quantity5 = 2;
-    var price5 = 80000;
+    var quantity5 = 3;
+    var price5 = 800;
     var extended_price5 = price5 * quantity5; // Compute extended
 
     var subtotal = extended_price1 + extended_price2 + extended_price3 + extended_price4 + extended_price5; //Compute subtotal
@@ -41,19 +41,31 @@
 
     var grandtotal = subtotal + taxamount; // Computes Grand total
 
+    //Calculates shipping cost
+
+    var shippingamount = 0;
+
+    if(subtotal <= 50){
+        shippingamount = 2;
+    } else if(subtotal > 50 && subtotal <= 100){
+        shippingamount = 5;
+    } else {
+        shippingamount = (subtotal/100) * 5;
+    }
+
+    grandtotal = grandtotal + shippingamount;
 
     document.write(`<table style="margin-right: auto; margin-left: auto; text-align: center; border: 1px black solid;">`);
-        document.write(`<tr><th>Item</th><th>Quantity</th><th>Price</th><th style="padding-right: 25px;">Extended Price</th>`);
+    document.write(`<tr><th>Item</th><th>Quantity</th><th>Price</th><th style="padding-right: 25px;">Extended Price</th>`);
     document.write(`<tr><td style="text-align: left; padding: 15px;">${item1}</td><td>${quantity1}</td><td>$${price1.toFixed(2)}</td><td style="text-align: left; padding-left: 25px;">$${extended_price1.toFixed(2)}</td>`);
     document.write(`<tr><td style="text-align: left; padding: 15px;">${item2}</td><td>${quantity2}</td><td>$${price2.toFixed(2)}</td><td style="text-align: left; padding-left: 25px;">$${extended_price2.toFixed(2)}</td>`);
     document.write(`<tr><td style="text-align: left; padding: 15px;">${item3}</td><td>${quantity3}</td><td>$${price3.toFixed(2)}</td><td style="text-align: left; padding-left: 25px;">$${extended_price3.toFixed(2)}</td>`);
     document.write(`<tr><td style="text-align: left; padding: 15px;">${item4}</td><td>${quantity4}</td><td>$${price4.toFixed(2)}</td><td style="text-align: left; padding-left: 25px;">$${extended_price4.toFixed(2)}</td>`);
     document.write(`<tr><td style="text-align: left; padding: 15px;">${item5}</td><td>${quantity5}</td><td>$${price5.toFixed(2)}</td><td style="text-align: left; padding-left: 25px;">$${extended_price5.toFixed(2)}</td>`);
     document.write(`<tr><td style="text-align: left; padding: 15px; padding-top: 29px;">Sub-Total</td><td><br /></td><td><br /></td><td style="text-align: left; padding-left: 25px;"><br />$${subtotal.toFixed(2)}</td>`);
-    document.write(`<br />`);
-    document.write(`<tr><td style="text-align: left; padding: 15px; padding-top: 29px;">Sub-Total</td><td><br /></td><td><br /></td><td style="text-align: left; padding-left: 25px;"><br />$${subtotal.toFixed(2)}</td>`);
-    document.write(`<tr><td style="text-align: left; padding: 15px; padding-top: 50px;">Tax @ ${taxrate}%</td><td><br /></td><td><br /></td><td style="text-align: left; padding-left: 25px; padding-top: 50px;">$${taxamount.toFixed(2)}<br /></td>`);
-        document.write(`<tr><td style="text-align: left; padding: 5px; padding-top: 30px; font-weight: bold;"><p style="font-weight: bold; text-align: left; padding-left: 10px;">Total</p></td><td><br /></td><td><br /></td><td style="text-align: left; padding-left: 25px; "><br /><p style="font-weight: bold; ">$${grandtotal.toFixed(2)}</p></td>`);
+    document.write(`<tr><td style="text-align: left; padding: 15px; padding-top: 50px;">Tax @ ${taxrate}%</td><td><br /></td><td><br /></td><td style="text-align: left; padding-left: 25px; padding-top: 40px;">$${taxamount.toFixed(2)}<br /></td>`);
+    document.write(`<tr><td style="text-align: left; padding: 15px; padding-top: 0px;">Shipping</td><td><br /></td><td></td><td style="text-align: left; padding-left: 25px; padding-bottom: 10px;">$${shippingamount.toFixed(2)}<br /></td>`);
+    document.write(`<tr><td style="text-align: left; padding: 5px; padding-top: 0px; font-weight: bold;"><p style="font-weight: bold; text-align: left; padding-left: 10px;">Total</p></td><td><br /></td><td><br /></td><td style="text-align: left; padding-left: 25px;"><p style="font-weight: bold; ">$${grandtotal.toFixed(2)}</p></td>`);
     document.write(`</table>`);
 
 

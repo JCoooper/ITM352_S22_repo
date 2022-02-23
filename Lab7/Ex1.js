@@ -4,12 +4,9 @@ var num_products = 5;
 
 var count = 1;
 
-while (count <= num_products) {
+for (count = 1; eval("typeof name"+count) != 'undefined'; count++) {
   console.log(`${count}. ${eval("name" + count)}`);
-  count++;
-  if (count > num_products / 2) {
-    break;
-  }
+
 }
 
-console.log("That’s all we have!");
+console.log("That's all we have!");
