@@ -31,7 +31,7 @@
     </style>
 
     <script>
-       
+
     </script>
 </head>
 <link rel="stylesheet" href="products-style.css">
@@ -42,20 +42,22 @@
         <main>
 
             <script>
-            
-                for(var i = 0; i < products.length; i++){
-                document.write(`
+
+                for (var i = 0; i < products.length; i++) {
+                    document.write(`
                 <section class="item" onmouseover="this.className='item rotate'" onclick="this.className='item'">
                     <h2>${products[i].brand}</h2>
                     <p>&dollar;${products[i].price}</p>
                     <img src="${products[i].image}">
                 </section>
                 `)
+                }
+                var addEmUp = function(x, y) {
+
+                return x + y;
             }
 
-            var alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
-        console.log('letters f through p in the alphabet are ' + alphabet.substring(5, 16));
             </script>
 
         </main>
