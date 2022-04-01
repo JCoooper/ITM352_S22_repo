@@ -1,0 +1,8 @@
+#statement{ 
+    text-align: center;
+    font-weight: bold;
+    inline-size: 200px;
+    overflow-wrap: break-word;
+    display: flexbox;
+    padding-left: 41.7%;
+}
