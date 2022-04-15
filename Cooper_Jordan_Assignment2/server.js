@@ -116,7 +116,6 @@ app.post("/login", function (request, response) {
   console.log(request.body);
 
   var loginerror = "";
-  var useremail = users[request.body.email];
 
   // Process login form POST and redirect to logged in page if ok, back to login page if not
   if (typeof users[request.body.email.toLowerCase()] != "undefined") {
