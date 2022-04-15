@@ -38,7 +38,13 @@
         <input id="passwordbox" type="password" name="password" size="40" placeholder="Enter Password"><br />
         <input id="submitbutton" type="submit" value="Submit" id="submit">
         <br>
-        <a is="newuser" href="register.html">New User?</a>
+        <input id="newuser" type="button" name="newuser" value="New User?"
+            onclick="window.location='./register.html' + document.location.search;">
+
+        <script> // grabs query string to be used after registration
+            login.action += document.location.search; 
+        </script>
+
     </form>
 </body>
 

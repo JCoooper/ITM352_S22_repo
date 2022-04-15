@@ -20,6 +20,7 @@ var urlstring; //var to store url string
 // get items
 var products_array = require(__dirname + "/products.json");
 
+const qs = require('querystring');
 var express = require("express");
 const req = require("express/lib/request");
 var app = express();
@@ -73,6 +74,7 @@ var filename = "./userdata.json";
 
 const fs = require("fs");
 const { url } = require("inspector");
+const { userInfo } = require("os");
 if (fs.existsSync(filename)) {
   //check
   let stats = fs.statSync(filename);
@@ -141,37 +143,69 @@ app.post("/login", function (request, response) {
 //-------------------------------------------------------------------------------
 
 //----------------------------Register-------------------------------------------
-app.get("/register", function (request, response) {
-  // Give a simple register form
-  str = `
- <body>
- <form action="" method="POST">
- <input type="text" name="username" size="40" placeholder="enter username" ><br />
- <input type="password" name="password" size="40" placeholder="enter password"><br />
- <input type="password" name="repeat_password" size="40" placeholder="enter password again"><br />
- <input type="email" name="email" size="40" placeholder="enter email"><br />
- <input type="submit" value="Submit" id="submit">
- </form>
- </body>
-     `;
-  response.send(str);
-});
-
 app.post("/register", function (request, response) {
   // process a simple register form
   console.log(request.body);
-  let username = request.body.username;
-  users[username] = {};
-  users[username].password = request.body.password;
-  users[username].repeat_password = request.body.repeat_password;
-  users[username].email = request.body.email;
+  let email = request.body.email;
+  let name = request.query['name'];
+  users[email] = {};
+  users[email].password = request.body.password;
+  users[email].repeat_password = request.body.repeat_password;
+  users[email].email = request.body.email;
 
-  if (users[username].password == users[username].repeat_password) {
-    fs.writeFileSync(filename, JSON.stringify(users));
-  } else {
-    console.log("passwords dont match");
-    response.send(`Passwords do not match<br>${str}`);
-  }
+  var errorarray = {};
+  errorarray['name'] = [];
+  errorarray['email'] = [];
+  errorarray['password'] = [];
+  errorarray['password2'] = [];
+
+    // Check to see if email has correct chars
+    if (/^[a-zA-Z0-9._]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,3}$/.test(request.body.email) == false) {
+       errorarray['email'].push("Email is not valid");
+    } 
+
+    //Check to see if email is taken
+    if(typeof users[request.body['email'].toLowerCase()] != "undefined"){
+      errorarray['email'].push("Email is already taken");
+    }
+
+    //check to see if name has correct chars
+    if(typeof name != "undefined"){
+       if(/^[A-Za-z ]+$/.test(request.body.name) == false) {
+         errorarray['name'].push("Name is not valid");
+       }
+    } else {
+      errorarray['name'].push("Please enter a name");
+    }
+
+    //check to see if password has 8 chars
+    if(request.body.password.length < 8){
+      errorarray['password'].push("Password needs to be at least 8 characters long");
+    }
+
+    if (request.body.password !== request.body.repeat_password) {
+      errorarray['password2'].push("Passwords do not match");
+    }
+     console.log(errorarray);
+
+    let params = new URLSearchParams(request.body);
+
+    if(JSON.stringify(errorarray) == "{}"){
+      users[email] = {};
+      users[email].name = request.body.name;
+      users[email].password = request.body.new_password;
+
+      fs.writeFileSync(filename, JSON.stringify(users), "utf-8");
+
+      response.redirect('./invoice.html?' + params.toString());
+      return;
+    } /*else {
+      request.query['email'] = email;
+      request.query['name'] = name;
+      request.query['errors'] = errorarray;
+      response.redirect(`./register.html?` + qs.stringify(request.query));
+    }*/
+
 });
 //-------------------------------------------------------------------------------
 

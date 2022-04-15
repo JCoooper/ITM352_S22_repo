@@ -29,5 +29,21 @@ form {
     margin-bottom: 15px;
 }
 #submitbutton:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 8px 8px -4px rgb(121, 121, 121);
+  }
+
+  #newuser{
+    margin-top: .1%;
+    background-color: #ffffff; 
+    border: none;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 1px;
+  }
+
+  #newuser:hover{
+      font-weight: bold;
   }
