@@ -1,7 +1,7 @@
 var filename = "./user_data.json";
 
-const fs = require("fs");
-if (fs.existsSync(filename)) {
+const fs = require("fs"); 
+if (fs.existsSync(filename)) { //check
   let stats = fs.statSync(filename);
   console.log(`${filename} has ${stats.size} characters`);
   var data = fs.readFileSync(filename, "utf-8");
@@ -24,7 +24,7 @@ app.get("/login", function (request, response) {
   // Give a simple login form
   str = `
 <body>
-<form action="" method="POST">
+<form action="" method="POST"> 
 <input type="text" name="username" size="40" placeholder="enter username" ><br />
 <input type="password" name="password" size="40" placeholder="enter password"><br />
 <input type="submit" value="Submit" id="submit">

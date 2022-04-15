@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="loginstyle.css">
+    <link rel="stylesheet" href="templatestyle.css">
+    <script type="text/javascript" src="server.js"></script>
+    <title>Log In</title>
+</head>
+
+<body>
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+            <a href="index.html" class="w3-bar-item w3-button"><b>Jewels</b> Co.</a>
+            <!-- Float links to the right. Hide them on small screens -->
+            <div class="w3-right w3-hide-small">
+                <a href="#projects" class="w3-bar-item w3-button">Products</a>
+                <a href="#about" class="w3-bar-item w3-button">About</a>
+                <a href="login.html" class="w3-bar-item w3-button">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    <form action="./login" method="POST">
+        <script>
+            //check query string for errors
+            window.onload = function () {
+                let params = (new URL(document.location)).searchParams;
+                if (params.has("loginerror")) {
+                    alert("Email or Password is Incorrect");
+                }
+            }
+        </script>
+        <input id="emailbox" type="text" name="email" size="40" placeholder="Enter Email"><br />
+        <input id="passwordbox" type="password" name="password" size="40" placeholder="Enter Password"><br />
+        <input id="submitbutton" type="submit" value="Submit" id="submit">
+        <br>
+        <a is="newuser" href="register.html">New User?</a>
+    </form>
+</body>
+
+</html>

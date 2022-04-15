@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registerstyle.css">
+    <link rel="stylesheet" href="templatestyle.css">
+    <title>Register</title>
+</head>
+
+<body>
+
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+            <a href="index.html" class="w3-bar-item w3-button"><b>Jewels</b> Co.</a>
+            <!-- Float links to the right. Hide them on small screens -->
+            <div class="w3-right w3-hide-small">
+                <a href="#projects" class="w3-bar-item w3-button">Products</a>
+                <a href="#about" class="w3-bar-item w3-button">About</a>
+                <a href="login.html" class="w3-bar-item w3-button">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    <form class="w3-center" action="./register" method="POST">
+        <input id="usernamebox" type="text" name="username" size="40" placeholder="Enter Username"><br />
+        <input id="passwordbox" type="password" name="password" size="40" placeholder="Enter Password"><br />
+        <input id="passwordbox2" type="password" name="repeat_password" size="40"
+            placeholder="Enter Password Again"><br />
+        <input id="emailbox" type="email" name="email" size="40" placeholder="Enter Email"><br />
+        <input id="submitbutton" type="submit" value="Submit" id="submit">
+    </form>
+</body>
+
+</html>
