@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="registerstyle.css">
     <link rel="stylesheet" href="templatestyle.css">
-    <title>Register</title>
+    <title>Edit Account</title>
 </head>
 
 <body>
@@ -25,10 +25,7 @@
     </div>
 
     <script>
-        //function help/ideas from josh
-        //function from https://www.aspsnippets.com/Articles/Perform-Email-validation-using-OnKeyPress-in-JavaScript.aspx
         //Function to validate email
-
         var gtg = true;
 
         function checkEmail(theTextbox) {
@@ -64,32 +61,21 @@
             }
         }
 
-        //function to check name
-        //regex from https://stackoverflow.com/questions/17899107/how-to-validate-a-letter-and-whitespace-only-input-via-javascript-regular-expres
-        function checkName(theTextbox) {
-            let namevalue = theTextbox.value;
-            document.getElementById("nameError").innerHTML = "";
-            var regex2 = /^[A-Za-z ]+$/;
-            if (!regex2.test(namevalue)) { //check with regex
-                document.getElementById("nameError").innerHTML = "Invalid name, use only letters and spaces."; //display msg
-                gtg = false;
-            }
-        }
     </script>
 
-    <form class="w3-center" action="./register" method="POST">
+    <form class="w3-center" action="./editaccount" method="POST">
         <b><span id="emailError" style="color: red;"></span>
-            <span id="nameError" style=" color: red;"></span>
             <span id="passwordError" style="color: red;"></span>
             <span id="passwordError2" style="color: red;"></span></b><br>
-        <input id="usernamebox" type="text" name="name" size="40" placeholder="Enter Username"
-            onkeyup="checkName(this)"><br />
-        <input id="passwordbox" type="password" name="password" size="40" placeholder="Enter Password"
-            onkeyup="passwordLenCheck(this)"><br />
-        <input id="passwordbox2" type="password" name="repeat_password" size="40" placeholder="Re-Enter Password"
-            onkeyup="passwordMatch(this)"><br />
         <input id="emailbox" type="email" name="email" size="40" placeholder="Enter Email"
             onkeyup="checkEmail(this)"><br />
+        <input id="oldpasswordbox" type="password" name="oldpassword" size="40" placeholder="Enter Old Password"
+            onkeyup="passwordLenCheck(this)"><br />
+        <input id="passwordbox" type="password" name="newpassword" size="40" placeholder="Enter New Password"
+            onkeyup="passwordLenCheck(this)"><br />
+        <input id="passwordbox2" type="password" name="repeatnewpassword" size="40" placeholder="Re-Enter New Password"
+            onkeyup="passwordMatch(this)"><br />
+
         <script>
             if (gtg == false) {
                 document.write(`
@@ -99,7 +85,7 @@
             } else {
                 document.write(`
         <input id="submitbutton" type="submit" value="Submit" id="submit"
-            onclick="window.location='./register.html' + document.location.search;">
+            onclick="window.location='./editaccount.html' + document.location.search;">
             `)
             }
         </script>

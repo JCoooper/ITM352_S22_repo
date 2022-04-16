@@ -32,6 +32,7 @@
                 if (params.has("loginerror")) {
                     alert("Email or Password is Incorrect");
                 }
+
             }
         </script>
         <input id="emailbox" type="text" name="email" size="40" placeholder="Enter Email"><br />
@@ -39,7 +40,9 @@
         <input id="submitbutton" type="submit" value="Submit" id="submit">
         <br>
         <input id="newuser" type="button" name="newuser" value="New User?"
-            onclick="window.location='./register.html' + document.location.search;">
+            onclick="window.location='./register.html' + document.location.search;"><br>
+            <input id="newuser" type="button" name="edituser" value="Change Password"
+            onclick="window.location='./editaccount.html' + document.location.search;">
 
         <script> // grabs query string to be used after registration
             login.action += document.location.search; 

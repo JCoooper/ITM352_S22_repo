@@ -41,6 +41,11 @@
     }
 </script>
 
+<script>
+//get email from query
+    //email = params.get('email');
+  </script>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,10 +55,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="invoicecss.css">
+    <link rel="stylesheet" href="templatestyle.css">
     <title>invoice</title>
 </head>
 
 <body>
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+            <a href="index.html" class="w3-bar-item w3-button"><b>Jewels</b> Co.</a>
+            <!-- Float links to the right. Hide them on small screens -->
+            <div class="w3-right w3-hide-small">
+                <a href="#projects" class="w3-bar-item w3-button">Products</a>
+                <a href="#about" class="w3-bar-item w3-button">About</a>
+                <a href="login.html" class="w3-bar-item w3-button">Log In</a>
+            </div>
+        </div>
+    </div>
+
+
     <!--writes/displays the invoice-->
     <script>
         document.write(`<table style="margin-right: auto; margin-left: auto; text-align: center; border: 1px black solid;">`);
@@ -65,7 +84,10 @@
         document.write(`<tr><td style="text-align: left; padding: 15px; padding-top: 0px;">Shipping</td><td><br /></td><td><br /></td><td style="text-align: left; padding-left: 25px; padding-top: 0px;">$${shippingamount.toFixed(2)}<br /></td>`);
         document.write(`<tr><td style="text-align: left; padding: 5px; padding-top: 30px; font-weight: bold;"><p style="font-weight: bold; text-align: left; padding-left: 10px;">Total</p></td><td><br /></td><td><br /></td><td style="text-align: left; padding-left: 25px; "><br /><p style="font-weight: bold; ">$${grandtotal.toFixed(2)}</p></td>`);
         document.write(`</table>`);</script>
-
+    <script>
+        document.write(`<p id="statement">Thank You ${params.get('name')}!</p><br>`)
+    </script>
+ 
     <p id="statement">OUR SHIPPING POLICY IS: A subtotal $0 - $49.99 will be $2 shipping. A subtotal $50 - $99.99 will be $5 shipping. Subtotals over $100 will be charged 5% of the subtotal amount.</p>
 
 </body>

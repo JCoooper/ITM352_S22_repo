@@ -71,6 +71,7 @@ app.get("/register", function (request, response) {
 app.post("/register", function (request, response) {
   // process a simple register form
   console.log(request.body);
+  //define the users data based onwhat was entered 
   let username = request.body.username;
   users[username] = {};
   users[username].password = request.body.password;

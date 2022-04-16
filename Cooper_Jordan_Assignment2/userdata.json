@@ -1,6 +1,1 @@
-{
-    "test@test.test": {
-        "name": "test",
-        "password": "test"
-    }
-}
+{"test@test.com":{"name":"test","password":"jcbulldog1"},"wow@wow.com":{"name":"test test","password":"jcbulldog1"}}
