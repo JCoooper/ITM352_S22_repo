@@ -45,6 +45,15 @@ app.post("/purchase", function(request, response, next) {
 
    for (i = 0; i < products_array.length; i++) {
        var inputValue = request.body[`quantity${i}`];
+
+    /*
+       if(inputValue >= products_array[i].quantity_available){
+           console.log("too large");
+        response.redirect("./index.html");
+       }
+       */
+ 
+
        if (!isNonNegInt(inputValue)) {
            // if it is not a negative int set isValidQuantity to false
            isValidQuantity = false;
@@ -55,16 +64,15 @@ app.post("/purchase", function(request, response, next) {
            hasValue = true;
        }
 
-       if (inputValue > products_array[i].quantity) {
+       if (inputValue >= products_array[i].quantity_available) {
            isValidQuantity = false;
        }
-   }
+   } 
 
    // redirect to invoice and store quantities in query string
    let params = new URLSearchParams(request.body);
-    //saves url string to be used in log in and reg functions
+   urlstring = params; //saves url string to be used in log in and reg functions
    if (isValidQuantity == true && hasValue == true) {
-      urlstring = params;
        response.redirect("./login.html?" + params.toString());
    } else {
        response.redirect("./index.html?" + params.toString());
@@ -114,7 +122,7 @@ app.post("/login", function(request, response) {
            hasValue = true;
        }
 
-       if (inputValue > products_array[i].quantity) {
+       if (inputValue > products_array[i].quantity_available) {
            isValidQuantity = false;
        }
    }
