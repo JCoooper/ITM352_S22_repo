@@ -24,7 +24,16 @@ app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 
+var session = require('express-session');
+
+app.use(session({secret: "MySecretKey", resave: true, saveUninitialized: true}));
+
+
 app.get("/login", function (request, response) {
+  var last_login = 'First login@';
+  if(typeof request.session.last_login != ' undefined'){
+    last_login = request.session.last_login;
+  }
   // Give a simple login form
   str = `
 <body>
@@ -39,11 +48,13 @@ app.get("/login", function (request, response) {
 });
 
 app.post("/login", function (request, response) {
+  console.log(request.sessionStore.sessions);
   console.log(request.body);
   // Process login form POST and redirect to logged in page if ok, back to login page if not
   if (typeof users[request.body.username] != "undefined") {
     //username exits so get stored pass and check if it matches password enterd    /* weirdly i cannot do request.body[password], fig out
     if (users[request.body.username].password == request.body.password) {
+      request.session.last_login = new Date();
       response.send(`${request.body.username} is logged in!`);
       return;
     } else {
@@ -93,6 +104,13 @@ app.post("/register", function (request, response) {
 app.get("/set_cookie", function (request, response) {
   var myname = "Jordan Cooper";
   response.cookie('users_name', myname);
+  response.send(`Cookie sent for ${myname}`)
+});
+
+
+app.get("/expire_cookie", function (request, response) {
+  var myname = "Jordan Cooper";
+  response.cookie('users_name', myname, {expire: Date.now()});
   response.send(`Cookie sent for ${myname}`)
 });
 

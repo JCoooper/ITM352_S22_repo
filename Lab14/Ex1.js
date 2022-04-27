@@ -1,7 +1,28 @@
-product = {name:'small gumball', price:'$0.34'};
+var express = require('express');
+var app = express();
 
-tax_rate = 0.045;
 
-total = product.price + product.price * tax_rate;
+app.get('/', function(req,res) {
+    res.send(
+        `<form action="/processform" method="POST">
+            Name1: <input name="name1"><br>
+            Name2: <input name="name1"><br>
+            <input type="submit" name="submit" value="Send POST Request">
+        </form>`
+        );
+});
 
-console.log(`A ${product.name} costs ${total}`); 
+app.post('/processform', function(req, res) {
+    if (typeof req.body["name"] != "undefined") {
+        for (value in req.body) {
+            if (value == "Tyler") {
+                res.send("Found him!");
+            } else {
+                res.send("I couldn't find Tyler :(");
+            }
+        }
+        
+    }
+});
+
+app.listen(8080, () => console.log(`listening on port 8080`));
