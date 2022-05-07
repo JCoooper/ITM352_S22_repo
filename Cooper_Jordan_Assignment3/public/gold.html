@@ -42,7 +42,7 @@
             if (params.has('purchase_submit')) {
                 has_errors = false; // assume quantities are valid from the start
                 total_qty = 0; // need to check if something was selected so we will look if the total > 0
-                for (i = 0; i < products_array.length; i++) { 
+                for (i = 0; i < goldarray.length; i++) { 
                     if (params.has(`quantity${i}`)) {
                         a_qty = params.get(`quantity${i}`);
                         // make textboxes sticky in case of invalid data
@@ -52,7 +52,7 @@
                             has_errors = true; // oops, invalid quantity
                             checkQuantityTextbox(product_form[`quantity${i}`]); // show where the error is
                         } 
-                         if(a_qty > products_array[i].quantity_available){
+                         if(a_qty > goldarray[i].quantity_available){
                             has_errors = true; // oops, invalid quantity
                             checkQuantityTextbox(product_form[`quantity${i}`]); // show where the error is
                         }
@@ -114,14 +114,24 @@
         <form name="product_form" action="./purchase" method="POST">
             <script>
                 //displays items
-                for (var i = 0; i <= products_array.length; i++) {
+
+                for (var i = 0; i <= goldarray.length; i++) {
+                    function setValue() {
+                        const quannum = document.getElementById("quantity" + i);
+                        quannum.value = Number(quannum.value) + 1;
+                    }
+                }
+
+                for (var i = 0; i <= goldarray.length; i++) {
                     document.write(`
-                <div class="w3-col l3 m6 w3-margin-bottom w3-padding-32">
-                <div class="w3-display-container">
-                    <div class="w3-display-bottomleft w3-black w3-padding w3-button">${products_array[i].name} | x${products_array[i].quantity_available} left</div>
-                    <div class="w3-display-topleft w3-black w3-padding">$${products_array[i].price}</div>
-                    <div class="w3-display-topright "><input class="quan" type="text" id="quantity${i}" placeholder="0" name="quantity${i}" onkeyup="checkQuantityTextbox(this, ${i});"></div>
-                    <img src="${products_array[i].image}" alt="jewelry" style="width:300px; height:300px; border-style: solid;">
+                    <div id=itembox class="w3-col">
+                    <div class="w3-display-container">
+                    <div class="w3-display-bottomleft w3-black w3-padding w3-button">${goldarray[i].name} | x${goldarray[i].quantity_available} left</div>
+                    <div id=additem class="w3-display-bottomright"><button type="button" id=plus class="plus" onclick="setValue()">+</button></div>
+                    <div class="w3-display-bottomright"><button class="minus">-</button></div>
+                    <div class="w3-display-topleft w3-black w3-padding">$${goldarray[i].price}</div>
+                    <div id=quanbox class="quan"><input class="" type="text" id="quantity${i}" placeholder="0" name="quantity${i}" onkeyup="checkQuantityTextbox(this, ${i});"></div>
+                    <img src="${goldarray[i].image}" alt="jewelry" style="width:350px; height:350px; border-style: solid;">
                 </div>
             </div>
             `);

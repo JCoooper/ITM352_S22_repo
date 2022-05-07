@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="./product_data.js"></script>
 
-    <meta http-equiv="refresh" content="199999999.5">
+    <meta http-equiv="refresh" content="999999.5">
 
     <script>
 
@@ -87,7 +87,7 @@
             <nav id=navbar class="w3-center">
                 <a href="gold.html" class="w3-bar-item w3-button">Gold</a>
                 <a href="diamond.html" class="w3-bar-item w3-button">Diamond</a>
-                <a href="pearl.html" class="w3-bar-item w3-button">Diamond</a>
+                <a href="pearl.html" class="w3-bar-item w3-button">Pearl</a>
             </nav>
 
             <div class="w3-right w3-hide-small">
@@ -124,14 +124,16 @@
                     }
 
                     document.write(`                    
-                    <div id=itembox class="w3-col ">
-                <div class="w3-display-container">
+                    <div id=itembox class="w3-col">
+                    <div class="w3-display-container">
                     <div class="w3-display-bottomleft w3-black w3-padding w3-button">${products_array[i].name} | x${products_array[i].quantity_available} left</div>
-                    <div id=additem class="w3-display-bottomright"><button type="button" id=plus class="plus" onclick="setValue()">+</button></div>
+                    <div id="wrapper">
+                    <div class="w3-display-bottomright"><button type="button" id=plus class="plus" onclick="setValue()">+</button></div>
                     <div class="w3-display-bottomright"><button class="minus">-</button></div>
+                    </div>
                     <div class="w3-display-topleft w3-black w3-padding">$${products_array[i].price}</div>
                     <div id=quanbox class="quan"><input class="" type="text" id="quantity${i}" placeholder="0" name="quantity${i}" onkeyup="checkQuantityTextbox(this, ${i});"></div>
-                    <img src="${products_array[i].image}" alt="jewelry" style="width:300px; height:300px; border-style: solid;">
+                    <img src="${products_array[i].image}" alt="jewelry" style="width:350px; height:350px; border-style: solid;">
                 </div>
     </div>
     `);
