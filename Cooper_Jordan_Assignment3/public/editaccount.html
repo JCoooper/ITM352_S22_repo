@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registerstyle.css">
+    <link rel="stylesheet" href="templatestyle.css">
+    <title>Edit Account</title>
+</head>
+
+<body>
+
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+            <a href="index.html" class="w3-bar-item w3-button"><b>Jewels</b> Co.</a>
+            <!-- Float links to the right. Hide them on small screens -->
+            <div class="w3-right w3-hide-small">
+                <a href="#projects" class="w3-bar-item w3-button">Products</a>
+                <a href="#about" class="w3-bar-item w3-button">About</a>
+                <a href="login.html" class="w3-bar-item w3-button">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //Function to validate email
+        var gtg = true;
+
+        function checkEmail(theTextbox) {
+            let textboxValue = theTextbox.value; // store textbox value in var
+            document.getElementById("emailError").innerHTML = "";
+            var regex = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            //test textbox value to regex
+            if (!regex.test(textboxValue)) {
+                document.getElementById("emailError").innerHTML = "Invalid email address."; //display msg
+                gtg = false;
+            }
+        }
+
+        //function to check password for 8 characters
+        function passwordLenCheck(theTextbox) {
+            let passwordcheck = theTextbox.value; //store textbox value
+            document.getElementById("passwordError").innerHTML = "";
+            if (passwordcheck.length < 8) { //check if it is 8 chars
+                document.getElementById("passwordError").innerHTML = "Password must be 8 characters."; //display msg
+                gtg = false;
+            }
+        }
+
+        //check to see if passwords 1 and 2 match
+        function passwordMatch(theTextbox) {
+            document.getElementById("passwordError2").innerHTML = "";
+            //store both passwords
+            let password1 = document.getElementById("passwordbox").value
+            let password2 = document.getElementById("passwordbox2").value
+            if (password1 != password2) { //check if text/passwords match
+                document.getElementById("passwordError2").innerHTML = "Passwords do not match."; //display msg
+                gtg = false;
+            }
+        }
+
+    </script>
+
+    <form class="w3-center" action="./editaccount" method="POST">
+        <b><span id="emailError" style="color: red;"></span>
+            <span id="passwordError" style="color: red;"></span>
+            <span id="passwordError2" style="color: red;"></span></b><br>
+        <input id="emailbox" type="email" name="email" size="40" placeholder="Enter Email"
+            onkeyup="checkEmail(this)"><br />
+        <input id="oldpasswordbox" type="password" name="oldpassword" size="40" placeholder="Enter Old Password"
+            onkeyup="passwordLenCheck(this)"><br />
+        <input id="passwordbox" type="password" name="newpassword" size="40" placeholder="Enter New Password"
+            onkeyup="passwordLenCheck(this)"><br />
+        <input id="passwordbox2" type="password" name="repeatnewpassword" size="40" placeholder="Re-Enter New Password"
+            onkeyup="passwordMatch(this)"><br />
+
+        <script>
+            if (gtg == false) {
+                document.write(`
+        <input id="submitbutton" type="submit" value="Submit" id="submit"
+            onclick="window.location='./invoice.html' + document.location.search;">
+            `)
+            } else {
+                document.write(`
+        <input id="submitbutton" type="submit" value="Submit" id="submit"
+            onclick="window.location='./editaccount.html' + document.location.search;">
+            `)
+            }
+        </script>
+
+        <script> // grabs query string to be used after registration
+            login.action += document.location.search; 
+        </script>
+    </form>
+</body>
+
+</html>

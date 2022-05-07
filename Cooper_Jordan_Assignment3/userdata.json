@@ -1,0 +1,10 @@
+{
+    "test@test.com": {
+        "name": "test",
+        "password": "jcbulldog1"
+    },
+    "itm352@hawaii.edu": {
+        "name": "ITM 352",
+        "password": "grader"
+    }
+}

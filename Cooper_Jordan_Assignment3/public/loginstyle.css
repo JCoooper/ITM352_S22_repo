@@ -1,0 +1,49 @@
+form {
+  text-align: center;
+  margin-top: 15%;
+}
+
+#emailbox {
+  width: 15%;
+  padding: 5px;
+  text-align: center;  
+}
+
+#passwordbox {
+  width: 15%;
+  margin-top: 3px;
+  padding: 5px;
+  text-align: center;
+}
+
+#submitbutton {
+    margin-top: .5%;
+    background-color: #000000; 
+    border: none;
+    color: white;
+    padding: 10px 27px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+#submitbutton:hover {
+    box-shadow: 0 8px 8px -4px rgb(121, 121, 121);
+  }
+
+  #newuser{
+    margin-top: .1%;
+    background-color: #ffffff; 
+    border: none;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 1px;
+  }
+
+  #newuser:hover{
+      font-weight: bold;
+  }
