@@ -7,11 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="templatestyle.css">
     <link rel="stylesheet" href="style.css">
-    <script src="./product_data.js"></script>
-
-    <meta http-equiv="refresh" content="999999.5">
-
+    <script src="./functions.js"></script>
+    <meta http-equiv="refresh" content="9999999999.5">
     <script>
+
+        //help from prof port
+        var products_array;
+        loadJSON("./productData", function (response) {
+            // Parsing JSON string into object
+            products_array = JSON.parse(response);
+        });
+
+        var cart_array;
+        loadJSON("./cartData", function (response) {
+            // Parsing JSON string into object
+            cart_array = JSON.parse(response);
+        });
 
         //from lab12
         function isNonNegInt(q, returnerrors = false) {
@@ -37,40 +48,13 @@
             document.getElementById(theTextbox.name).innerHTML = errs.join(", ");
         }
 
-        //help from assignment 1 example
+        //help from prof port
         window.onload = function () {
-            let params = (new URL(document.location)).searchParams; // get the query string which has the form data
-            // form was submitted so check that quantities are valid then redirect to invoice if ok.
-            if (params.has('purchase_submit')) {
-                has_errors = false; // assume quantities are valid from the start
-                total_qty = 0; // need to check if something was selected so we will look if the total > 0
-                for (i = 0; i < products_array.length; i++) {
-                    if (params.has(`quantity${i}`)) {
-                        a_qty = params.get(`quantity${i}`);
-                        // make textboxes sticky in case of invalid data
-                        product_form[`quantity${i}`].value = a_qty;
-                        total_qty += a_qty;
-                        if (!isNonNegInt(a_qty)) {
-                            has_errors = true; // oops, invalid quantity
-                            checkQuantityTextbox(product_form[`quantity${i}`]); // show where the error is
-                        }
-                        if (a_qty > products_array[i].quantity_available) {
-                            has_errors = true; // oops, invalid quantity
-                            checkQuantityTextbox(product_form[`quantity${i}`]); // show where the error is
-                        }
-                    }
-                }
-                // Now respond to errors or redirect to invoice if all is ok
-                if (has_errors) {
-                    alert("Please enter only valid quantities!");
-                } else if (total_qty == 0) { // no quantity selections, just give a general alert
-                    alert("Please select some quantities!");
-                } else { // all good to go!
-                    window.location = `./invoice.html${document.location.search}`;
-                    window.stop;
-                }
+            for (var i in products_array) {
+                document.getElementById(`quantity${i}`).value = cart_array[i];
             }
         }
+
 
     </script>
 
@@ -91,6 +75,15 @@
             </nav>
 
             <div class="w3-right w3-hide-small">
+                <div class="container w3-bar-item">
+                    <img src="pics\shoppingcart.png" alt="jewelry" style="width: 25px; height: 25px;">
+                    <script>
+                        function getSum(total, num) {
+                            return total + Math.round(num);
+                        }
+                        document.write(`<div id="cart" class="w3-bar-item">${cart_array.reduce(getSum, 0)}</div>`);
+                    </script>
+                </div>
                 <a href="login.html" class="w3-bar-item w3-button">Log In</a>
             </div>
         </div>
@@ -116,20 +109,47 @@
         <form name="product_form" action="./purchase" method="POST">
             <script>
 
-                //displays items
-                for (var i = 0; i <= products_array.length; i++) {
-                    function setValue() {
-                        const quannum = document.getElementById("quantity" + i);
-                        quannum.value = Number(quannum.value) + 1;
+                //function help from prof port
+                function setValue(index, increment) { //change name
+                    var quannum = document.getElementById("quantity" + index);
+                    if (Number(quannum.value) + increment < 0) { //
+                        quannum.value = Number(quannum.value);
+                    } else if (Number(quannum.value) + increment > products_array[index].quantity_available) { // checks to see if it is more than avail
+                        quannum.value = Number(quannum.value);
+                        location.reload();
+                    } else {
+                        quannum.value = Number(quannum.value) + increment;
+                        location.reload();
                     }
 
+                    loadJSON(`./updateCart?pindex=${index}&qty=${quannum.value}`, function (response) {
+                        // Parsing JSON string into object
+                        var response = JSON.parse(response);
+                    });
+                }
+
+                var productPageArray = [];
+
+                    for (var i = 0; i < products_array.length; i++){
+                        if (products_array[i]["itemNum"] == "1"){ // ---!--- need to get this to only pull certain items and add to an array via item num
+                        productPageArray.push(products_array[i]);
+                        }
+                }   
+
+                    // will return undefined if not found; you could return a default instead
+                
+
+                
+
+                //displays items
+                for (var i = 0; i <= products_array.length; i++) {
                     document.write(`                    
                     <div id=itembox class="w3-col">
                     <div class="w3-display-container">
-                    <div class="w3-display-bottomleft w3-black w3-padding w3-button">${products_array[i].name} | x${products_array[i].quantity_available} left</div>
+                    <div class="w3-display-bottomleft w3-black w3-padding">${products_array[i].name} | x${products_array[i].quantity_available} left</div>
                     <div id="wrapper">
-                    <div class="w3-display-bottomright"><button type="button" id=plus class="plus" onclick="setValue()">+</button></div>
-                    <div class="w3-display-bottomright"><button class="minus">-</button></div>
+                    <div class="w3-display-bottomright"><button type="button" id=plus class="plus" onclick="setValue(${i},1)">+</button></div>
+                    <div class="w3-display-bottomright"><button type="button" class="minus" onclick="setValue(${i},-1)">-</button></div>
                     </div>
                     <div class="w3-display-topleft w3-black w3-padding">$${products_array[i].price}</div>
                     <div id=quanbox class="quan"><input class="" type="text" id="quantity${i}" placeholder="0" name="quantity${i}" onkeyup="checkQuantityTextbox(this, ${i});"></div>

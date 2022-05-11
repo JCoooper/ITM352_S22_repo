@@ -23,6 +23,9 @@ var products_array = require(__dirname + "/products.json");
 var express = require("express");
 const req = require("express/lib/request");
 var app = express();
+var session = require('express-session');
+
+app.use(session({secret: "MySecretKey", resave: true, saveUninitialized: true}));
 
 //help from stackoverflow
 app.use(express.urlencoded({
@@ -34,8 +37,33 @@ app.use(express.urlencoded({
 // monitor all requests
 app.all("*", function(request, response, next) {
    console.log(request.method + " to " + request.path);
+   if(typeof request.session.cart == "undefined"){
+    request.session.cart = Array.apply(null, Array(products_array.length)).map(Number.prototype.valueOf,0);
+    console.log(request.session.cart);
+}
    next();
 });
+
+app.post("/productData", function(request, response, next) {
+    response.json(products_array);
+    
+ });
+
+ app.post("/cartData", function(request, response, next) {
+    response.json(request.session.cart);
+    
+ });
+
+app.post("/updateCart", function(request, response, next) {
+    console.log(request.query);
+    var prodIndex = request.query.pindex;
+    var qty = request.query.qty;
+
+    
+    request.session.cart[prodIndex] = qty;
+    response.json({});
+    console.log(request.session);
+ });
 
 // process purchase request (validate quantities, check quantity available)
 app.post("/purchase", function(request, response, next) {

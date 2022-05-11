@@ -89,6 +89,10 @@
         </nav>
 
         <div class="w3-right w3-hide-small">
+            <div class="container w3-bar-item">
+                <img src="pics\shoppingcart.png" alt="jewelry" style="width: 25px; height: 25px;">
+                <div id="cart" class="w3-bar-item">0</div>
+            </div>
             <a href="login.html" class="w3-bar-item w3-button">Log In</a>
         </div>
     </div>
@@ -113,21 +117,28 @@
 
         <form name="product_form" action="./purchase" method="POST">
             <script>
-                //displays items
-                for (var i = 0; i <= pearlarray.length; i++) {
-                    function setValue() {
-                        const quannum = document.getElementById("quantity" + i);
-                        quannum.value = Number(quannum.value) + 1;
+                //function help from prof port
+                function setValue(index, increment) {
+                    var quannum = document.getElementById("quantity" + index);
+                    if (Number(quannum.value) + increment < 0) {
+                        quannum.value = Number(quannum.value);
+                    } else if (Number(quannum.value) + increment > pearlarray[index].quantity_available) {
+                        quannum.value = Number(quannum.value);
+                    } else {
+                        quannum.value = Number(quannum.value) + increment;
                     }
                 }
 
+                //displays items
                 for (var i = 0; i <= pearlarray.length; i++) {
                     document.write(`
                     <div id=itembox class="w3-col">
                     <div class="w3-display-container">
-                    <div class="w3-display-bottomleft w3-black w3-padding w3-button">${pearlarray[i].name} | x${pearlarray[i].quantity_available} left</div>
-                    <div id=additem class="w3-display-bottomright"><button type="button" id=plus class="plus" onclick="setValue()">+</button></div>
-                    <div class="w3-display-bottomright"><button class="minus">-</button></div>
+                    <div class="w3-display-bottomleft w3-black w3-padding">${pearlarray[i].name} | x${pearlarray[i].quantity_available} left</div>
+                    <div id="wrapper">
+                        <div class="w3-display-bottomright"><button type="button" id=plus class="plus" onclick="setValue(${i},1)">+</button></div>
+                    <div class="w3-display-bottomright"><button type="button" class="minus" onclick="setValue(${i},-1)">-</button></div>
+                    </div>
                     <div class="w3-display-topleft w3-black w3-padding">$${pearlarray[i].price}</div>
                     <div id=quanbox class="quan"><input class="" type="text" id="quantity${i}" placeholder="0" name="quantity${i}" onkeyup="checkQuantityTextbox(this, ${i});"></div>
                     <img src="${pearlarray[i].image}" alt="jewelry" style="width:350px; height:350px; border-style: solid;">
