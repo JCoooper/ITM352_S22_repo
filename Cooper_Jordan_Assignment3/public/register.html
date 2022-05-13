@@ -8,10 +8,39 @@
     <link rel="stylesheet" href="registerstyle.css">
     <link rel="stylesheet" href="templatestyle.css">
     <link rel="stylesheet" href="style.css">
+    <script src="./functions.js">//make sure this is in different files in order to keep car num/data</script> 
+    <script type="text/javascript" src="server.js"></script>
     <title>Register</title>
 </head>
 
 <body>
+
+    <script>
+        //help from prof port
+        var products_array;
+        loadJSON("./productData", function (response) {
+            // Parsing JSON string into object
+            products_array = JSON.parse(response);
+        });
+
+        var cart_array;
+        loadJSON("./cartData", function (response) {
+            // Parsing JSON string into object
+            cart_array = JSON.parse(response);
+        });
+
+        window.onload = function () {
+            for (var i in products_array) {
+                document.getElementById(`quantity${i}`).value = cart_array[i];
+            }
+        }
+
+        loadJSON(`./updateCart?pindex=${index}&qty=${quannum.value}`, function (response) {
+                        // Parsing JSON string into object
+                        var response = JSON.parse(response);
+                    });
+                
+    </script>
 
     <div class="w3-top">
         <div class="w3-bar w3-white w3-wide w3-padding w3-card">
@@ -19,15 +48,21 @@
             <!-- Float links to the right. Hide them on small screens -->
 
             <nav id=navbar class="w3-center">
-                <a href="gold.html" class="w3-bar-item w3-button">Gold</a>
-                <a href="diamond.html" class="w3-bar-item w3-button">Diamond</a>
-                <a href="pearl.html" class="w3-bar-item w3-button">Pearl</a>
+                <a href="index.html?prodType=gold" class="w3-bar-item w3-button">Gold</a>
+                <a href="index.html?prodType=diamond" class="w3-bar-item w3-button">Diamond</a>
+                <a href="index.html?prodType=pearl" class="w3-bar-item w3-button">Pearl</a>
             </nav>
 
             <div class="w3-right w3-hide-small">
                 <div class="container w3-bar-item">
+                    <a id="checkoutbutton" class="w3-button" style="text-decoration: none;" href="">Check Out</a>
                     <img src="pics\shoppingcart.png" alt="jewelry" style="width: 25px; height: 25px;">
-                    <div id="cart" class="w3-bar-item">0</div>
+                    <script>
+                        function getSum(total, num) {
+                            return total + Math.round(num);
+                        }
+                        document.write(`<div id="cart" class="w3-bar-item">${cart_array.reduce(getSum, 0)}</div>`);
+                    </script>
                 </div>
                 <a href="login.html" class="w3-bar-item w3-button">Log In</a>
             </div>

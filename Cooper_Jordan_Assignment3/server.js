@@ -279,13 +279,11 @@ app.post("/register", function(request, response) {
        fs.writeFileSync(filename, JSON.stringify(users), "utf-8");
 
        params.append("email", request.body.email);
-       response.redirect("./invoice.html?" + urlstring + "&name=" + users[request.body.email.toLowerCase()].name);
+       response.redirect("./invoice.html");
        return;
    } else {
        request.body.errorarray = JSON.stringify(errorarray);
-       response.redirect(
-           `./register.html?` + qs.stringify(request.body) + "&" + urlstring
-       );
+       response.redirect(`./register.html?` + qs.stringify(request.body) + "&" + urlstring);
    }
 });
 //-------------------------------------------------------------------------------
