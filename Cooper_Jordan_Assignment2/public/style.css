@@ -1,49 +1,144 @@
-body{
-    max-height: 10vh;
+#wrapper {
+   position: absolute;
 }
 
-button{
+button {
     margin-right: 22%;
 }
 
-.quan{
-    width: 50px;
-    margin-right: 80px;
+.quan {
+    width: 10px;
     margin-top: 3px;
 }
 
-.boxdisplay{
-    display: block;
-    width: 100%;
-}
-
-#left{
+#left {
     width: 50px;
     margin-right: 85px;
-    margin-top: 3px; 
+    margin-top: 3px;
 }
 
-input[type=submit]{
+#submit {
     background-color: #000000;
     border: none;
     color: white;
-    padding: 16px 50px;
     text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer; 
+    cursor: pointer;
+
+    width: 20px;
+    font-size: 5px;
 }
 
-#footer2{
-margin-bottom: -800px;
-margin-top: 100px;
+#footer2 {
+    margin-bottom: -800px;
+    margin-top: 100px;
 }
 
-/*
-#footer{
-
+#navbar {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
-#submit{
+input[type="text"] {
+    width: 50px;
+    margin-left: 23px;
+}
+
+#quanbox {
+    position: absolute;
+    transform: translate(-50%, 0);
+    padding-left: 550px;
+    pointer-events: none;
+}
+
+#itembox{
+    /*margin-right: 10px;*/
+    margin:20px;
+    margin: auto;
+    width: 32%;
+    padding: 30px;
+    right: 30px;
+    
+    
+}
+
+.plus {
+    position: absolute;
+    transform: translate(-50%, 0);
+    background-color: #000000;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 50%;
+
+    padding-right: 11px;
+    padding-left: 11px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    
+    margin-right: 10px;
+    margin-bottom: 3px;
+    margin-bottom: 50px;
+    
    
-}
-*/
+    
+    right: -330px;
+    bottom: -395px;
+    
+  }
+
+  .minus {
+    position: absolute;
+    transform: translate(-50%, 0);
+    background-color: #000000;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 50%;
+    padding-right: 13px;
+    padding-left: 13px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    margin-bottom: 3px;
+    margin-right: -30px;
+
+    right: -329px;
+    bottom: -348px;
+  }
+
+  .additem{
+      margin-top: 20px;
+  }
+
+  .container {
+    position: relative;
+    text-align: center;
+    color: rgb(0, 0, 0);
+  }
+  
+  #cart{
+    position: absolute;
+    top: 41%;
+    left: 87%;
+    transform: translate(-50%, -50%);
+    font-size: medium;
+    font-size: 12px;
+  }
+
+  #homepagebox{
+      padding-bottom: -200px;
+  }
+
+  #checkoutbutton{
+      font-size: 14px;
+      margin-right: 13px;
+      margin-bottom: -10px;
+      margin-top: -10px;
+      
+  }
+    

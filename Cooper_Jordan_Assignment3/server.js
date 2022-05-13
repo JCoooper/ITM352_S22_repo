@@ -1,4 +1,7 @@
+// !-- By: Jordan Cooper, File Use: This is the server file responsible for server side functions and calls --!
 //-- Functions --
+//help from professor port, sean and john
+//from lab 12
 function isNonNegInt(q, returnerrors = false) {
    errors = []; // assume no errors at first
    if (q == "") {
@@ -34,8 +37,7 @@ app.use(cookieParser());
 //help from stackoverflow
 app.use(express.urlencoded({extended: true}));
 
-// Routing
-
+// Help from prof port
 // monitor all requests
 app.all("*", function(request, response, next) {
    console.log(request.method + " to " + request.path);
@@ -47,6 +49,7 @@ app.all("*", function(request, response, next) {
    next();
 });
 
+// Help from prof port
 app.get("*", function(request, response, next) {
     if(request.path.includes("cart.html") == true || request.path.includes("index.html") == true){
         request.session.lastPage = request.originalUrl;
@@ -54,20 +57,24 @@ app.get("*", function(request, response, next) {
     next();
  });
 
+ // Help from prof port
  app.post("/productData", function(request, response, next) {
     response.json(products_array);
  });
 
+ // Help from prof port
  app.get("/logout", function(request, response, next) {
     request.session.loginID = undefined;
     response.redirect("back"); 
  });
 
+ // Help from prof port
  app.post("/cartData", function(request, response, next) {
     response.json(request.session.cart);
     
  });
 
+ // Help from prof port
  app.post("/getUserInfo", function(request, response, next) {
      if(typeof request.session.loginID == "undefined"){
         response.json({"email": undefined, "name": undefined});
@@ -75,7 +82,7 @@ app.get("*", function(request, response, next) {
         response.json({"email": request.session.loginID, "name": users[request.session.loginID].name});
     }
  });
-
+// Help from prof port
 app.post("/updateCart", function(request, response, next) {
     console.log(request.query);
     var prodIndex = request.query.pindex;
@@ -86,50 +93,6 @@ app.post("/updateCart", function(request, response, next) {
     console.log(request.session);
  });
 
-// process purchase request (validate quantities, check quantity available)
-app.post("/purchase", function(request, response, next) { //------------------------------- MAY NOT NEED----------------
-   //set defaults
-   var hasValue = false;
-   var isValidQuantity = true;
-
-   for (i = 0; i < products_array.length; i++) {
-       var inputValue = request.body[`quantity${i}`];
-
-    /*
-       if(inputValue >= products_array[i].quantity_available){
-           console.log("too large");
-        response.redirect("./index.html");
-       }
-       */
- 
-
-       if (!isNonNegInt(inputValue)) {
-           // if it is not a negative int set isValidQuantity to false
-           isValidQuantity = false;
-       }
-
-       //Check if a quantity is greater than 0
-       if (inputValue > 0) {
-           hasValue = true;
-       }
-
-       if (inputValue >= products_array[i].quantity_available) {
-           isValidQuantity = false;
-       }
-   } 
-
-   // redirect to invoice and store quantities in query string
-   let params = new URLSearchParams(request.body);
-   urlstring = params; //saves url string to be used in log in and reg functions
-   if (hasValue == true) {
-       response.redirect("./login.html?" + params.toString());
-   } else {
-       console.log(isValidQuantity);
-       console.log(hasValue);
-       response.redirect("./index.html?" + params.toString());
-   }
-});
-
 //-----start I/O and set user data file
 var filename = "./userdata.json";
 
@@ -137,9 +100,7 @@ const fs = require("fs");
 const {url} = require("inspector");
 const {userInfo} = require("os");
 if (fs.existsSync(filename)) {
-   //check
    let stats = fs.statSync(filename);
-   //console.log(`${filename} has ${stats.size} characters`); // tell how many chars are in file
    var data = fs.readFileSync(filename, "utf-8");
    var users = JSON.parse(data);
    if (typeof users["test@test.com"] != "undefined") {
@@ -147,13 +108,16 @@ if (fs.existsSync(filename)) {
    }
 } else {
    console.log(`${filename} does not exist!`);
-} //-----------------
+} //---------------------------------------
+
+//--------------------------------INVOICE EMAIL------------------------
+//help from code exmaples on class site
+
+//---------------------------------------------------------------------
 
 //----------------------------------LOG IN------------------------------
 
 app.post("/login", function(request, response) {
-   //----log in post-----
-
    //----check to see if there is a url string
    var hasValue = false;
    var isValidQuantity = true;
@@ -180,14 +144,13 @@ app.post("/login", function(request, response) {
    console.log(request.body);
 
    var loginerror = "";
-   //can make session vars with sess.username
-   //var backURL= history.back();
 
    // Process login form POST and redirect to logged in page if ok, back to login page if not
    if (typeof users[request.body.email.toLowerCase()] != "undefined") {
        //username exits so get stored pass and check if it matches password enterd    /* weirdly i cannot do request.body[password], fig out
        let params = new URLSearchParams(request.body);
        if (users[request.body.email.toLowerCase()].password == request.body.password) {
+           //help from prof port
         //log in sucsess put email into session to note they logged in, then send to index
         request.session.loginID = request.body.email.toLowerCase(); // to log out need to delete or make undefined 
         response.redirect(request.session.lastPage); //same for reg
@@ -202,7 +165,7 @@ app.post("/login", function(request, response) {
    response.redirect("./login.html?" + urlstring + "&loginerror=" + loginerror); //giving error 
 });
 
-
+//help from prof port
 app.get("/invoice.html", function(request, response,next) {
     if(typeof request.session.loginID == "undefined"){
         response.redirect("./login.html");
@@ -225,7 +188,7 @@ app.post("/register", function(request, response) {
    errorarray["password"] = [];
    errorarray["password2"] = [];
 
-   // Check to see if email has correct chars
+   // Check to see if email has correct chars, help from sean
    if (/^[a-zA-Z0-9._]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,3}$/.test(request.body.email) == false) {
        errorarray["email"].push("Email is not valid");
        errorcount++;
@@ -237,7 +200,7 @@ app.post("/register", function(request, response) {
        errorcount++;
    }
 
-   //check to see if name has correct chars and if taken or not
+   //check to see if name has correct chars and if taken or not, help from sean
    if (typeof request.body.name != "undefined") {
        if (/^[A-Za-z ]+$/.test(request.body.name) == false) {
            errorarray["name"].push("Name is not valid");
@@ -271,6 +234,7 @@ app.post("/register", function(request, response) {
 
    let params = new URLSearchParams(request.query);
 
+   //inspiration from john 
    if (errorcount == 0) {
        users[request.body["email"].toLowerCase()] = {};
        users[request.body["email"].toLowerCase()].name = request.body.name;
@@ -338,7 +302,7 @@ app.post("/editaccount", function(request, response) {
    }
    console.log(errorarray);
    console.log("Number of Errors: " + errorcount);
-
+   //help from sean 
    request.query["email"] = request.body["email"].toLowerCase();
    request.query["errors"] = errorarray;
    response.redirect(`./editaccount.html?` + "wronglogin" +qs.stringify(request.body) + "&" + urlstring);

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-
+<script>
+// !-- By: Jordan Cooper, File Use: This is the index file responsible for displaying items and adding items to cart --!
+//help from professor port and sean
+</script>
 <head>
     <title>Jewels Co.</title>
     <meta charset="UTF-8">
@@ -113,15 +116,6 @@
                         document.write(`<a href="./logout" class="w3-bar-item w3-button">${userinfo.name}</a>`);
                     }
                 </script>
-                <script>
-                    /*
-                if(sess.email) {
-                document.write(`<a href="login.html" class="w3-bar-item w3-button">${params.get('name')}</a>`);
-                } else {
-                document.write(`<a href="login.html" class="w3-bar-item w3-button">Log In</a>`);
-                }
-                */
-                </script>
             </div>
         </div>
     </div>
@@ -153,10 +147,10 @@
                         quannum.value = Number(quannum.value);
                     } else if (Number(quannum.value) + increment > products_array[index].quantity_available) { // checks to see if it is more than avail
                         quannum.value = Number(quannum.value);
-                        //location.reload();
+                        
                     } else {
                         quannum.value = Number(quannum.value) + increment;
-                        //location.reload();
+                        
                     }
 
                     loadJSON(`./updateCart?pindex=${index}&qty=${quannum.value}`, function (response) {
@@ -169,7 +163,7 @@
                 var areProducts = false;
                 //displays items
                 for (let i in products_array) {
-                    if (products_array[i]["itemDescription"] != prodType) { // gets only a certain items from prod list 
+                    if (products_array[i]["itemDescription"] != prodType) { // gets only a certain items from prod list, help from prof port 
                         continue;
                     }
                     areProducts = true;
@@ -208,7 +202,6 @@
             }
             
             </script>
-
 
             <!-- End page content -->
     </div>

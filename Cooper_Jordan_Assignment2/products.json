@@ -1,37 +1,128 @@
 [
     {
-    "name": "Pearl Necklace",
-    "price": 150.00,
-    "image": "/pics/pearlneck.jpg",
-    "quantity_available": 5
-},
-
-{
-    "name": "Diamond Ring",
-    "price": 3500.00,
-    "image": "/pics/diamondring2.jpg",
-    "quantity_available": 5
-},
-
-{
+    "name": "Diamond Watch",
+    "price": 30000.00,
+    "image": "/pics/diamondwatch.jpg",
+    "quantity_available": 5,
+    "itemDescription": "diamond"
+    },
+    {
     "name": "Diamond Necklace",
-    "price": 9000.00,
+    "price": 6500.00,
     "image": "/pics/diamondnecklace.jpg",
-    "quantity_available": 5
-},
-
-{
+    "quantity_available": 5,
+    "itemDescription": "diamond"
+    },
+    {
+    "name": "Diamond Chain Large",
+    "price": 10000.00,
+    "image": "/pics/diamondchainbig.jpg",
+    "quantity_available": 5,
+    "itemDescription": "diamond"
+    },
+    {
+    "name": "Diamond Chain Small",
+    "price": 6000.00,
+    "image": "/pics/diamondchainsmall.jpg",
+    "quantity_available": 5,
+    "itemDescription": "diamond"
+    },
+    {
+    "name": "Diamond Grill",
+    "price": 1500.00,
+    "image": "/pics/diamondgrill.jpg",
+    "quantity_available": 5,
+    "itemDescription": "diamond"
+    },
+    {
+    "name": "Diamond Ring",
+    "price": 7000.00,
+    "image": "/pics/diamondring2.jpg",
+    "quantity_available": 5,
+    "itemDescription": "diamond"
+    },
+    {
     "name": "Gold Watch",
-    "price": 780.00,
+    "price": 10000.00,
     "image": "/pics/goldwatch2.jpg",
-    "quantity_available": 5
-},
-
-{
+    "quantity_available": 5,
+    "itemDescription":"gold"
+    },
+    {
+    "name": "Gold Necklace",
+    "price": 5000.00,
+    "image": "/pics/goldnecklace.jpg",
+    "quantity_available": 5,
+    "itemDescription":"gold"
+    },
+    {
+    "name": "Gold Chain Large",
+    "price": 7000.00,
+    "image": "/pics/goldchainbig.jpg",
+    "quantity_available": 5,
+    "itemDescription":"gold"
+    },
+    {
+    "name": "Gold Chain Small",
+    "price": 3000.00,
+    "image": "/pics/goldchainsmall.jpg",
+    "quantity_available": 5,
+    "itemDescription":"gold"
+    },
+    {
+    "name": "Gold Grill",
+    "price": 1500.00,
+    "image": "/pics/goldgrill.jpg",
+    "quantity_available": 5,
+    "itemDescription":"gold"
+    },
+    {
+    "name": "Gold Ring",
+    "price": 600.00,
+    "image": "/pics/goldring.jpg",
+    "quantity_available": 5,
+    "itemDescription":"gold"
+    },
+    {
+    "name": "Pearl Necklace",
+    "price": 1000.00,
+    "image": "/pics/pearlneck.jpg",
+    "quantity_available": 5,
+    "itemDescription": "pearl"
+    },
+    {
     "name": "Pearl Bracelet",
-    "price": 80.00,
+    "price": 700.00,
     "image": "/pics/pearlhand.jpg",
-    "quantity_available": 5
-}
-
+    "quantity_available": 5,
+    "itemDescription": "pearl"
+    },
+    {
+    "name": "Pearl Earrings",
+    "price": 700.00,
+    "image": "/pics/pearlearrings.jpg",
+    "quantity_available": 5,
+    "itemDescription": "pearl"
+    },
+    {
+    "name": "Pearl Necklace Small",
+    "price": 900.00,
+    "image": "/pics/pearlnecklacesmall.jpg",
+    "quantity_available": 5,
+    "itemDescription": "pearl"
+    },
+    {
+    "name": "Pearl Choker",
+    "price": 1500.00,
+    "image": "/pics/pearlchoker.jpg",
+    "quantity_available": 5,
+    "itemDescription": "pearl"
+    },
+    {
+    "name": "Loose Pearls",
+    "price": 200.00,
+    "image": "/pics/loosepearls.jpg",
+    "quantity_available": 5,
+    "itemDescription": "pearl"
+    }
 ]
