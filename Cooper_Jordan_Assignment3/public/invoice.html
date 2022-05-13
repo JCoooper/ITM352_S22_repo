@@ -1,9 +1,32 @@
 <script src="./product_data.js"></script>
+<script src="./functions.js"></script>
 <script>
 
     /* get and fill item array with items */
     let params = (new URL(document.location)).searchParams;
     let product_quantities_array = [];
+
+            //help from prof port
+            var products_array;
+        loadJSON("./productData", function (response) {
+            // Parsing JSON string into object
+            products_array = JSON.parse(response);
+        });
+
+        var cart_array;
+        loadJSON("./cartData", function (response) {
+            // Parsing JSON string into object
+            cart_array = JSON.parse(response);
+        });
+
+        var userinfo;
+        loadJSON("./getUserInfo", function (response) {
+            // Parsing JSON string into object
+            userinfo = JSON.parse(response);
+            if(typeof userinfo == "undefined"){
+                location.href = "./login.html";
+            }
+        });
 
     for (var i = 0; i < products_array.length; i++) {
         if (params.has("purchase_submit")) {
@@ -21,9 +44,9 @@
 
     // function to calculate totals and display the items attributes 
     function displayinvoice() {
-        for (var i = 0; i < product_quantities_array.length; i++) {
-            if (product_quantities_array[i] > 0) {
-                extended_price = products_array[i].price * product_quantities_array[i];
+        for (var i in cart_array) {
+            if (cart_array[i] > 0) {
+                extended_price = products_array[i].price * cart_array[i];
                 subtotal = subtotal + extended_price;
                 taxamount = subtotal / taxrate;
                 grandtotal = subtotal + taxamount;
@@ -35,7 +58,7 @@
                     shippingamount = (subtotal / 100) * 5;
                 }
                 grandtotal = grandtotal + shippingamount;
-                document.write(`<tr><td style="text-align: left; padding: 15px;">${products_array[i].name}</td><td>${product_quantities_array[i]}</td><td>$${products_array[i].price.toFixed(2)}</td><td style="text-align: left; padding-left: 25px;">$${extended_price.toFixed(2)}</td>`);
+                document.write(`<tr><td style="text-align: left; padding: 15px;">${products_array[i].name}</td><td>${cart_array[i]}</td><td>$${products_array[i].price.toFixed(2)}</td><td style="text-align: left; padding-left: 25px;">$${extended_price.toFixed(2)}</td>`);
             }
         }
     }
@@ -65,9 +88,13 @@
             <a href="index.html" class="w3-bar-item w3-button"><b>Jewels</b> Co.</a>
             <!-- Float links to the right. Hide them on small screens -->
             <div class="w3-right w3-hide-small">
-                <a href="#projects" class="w3-bar-item w3-button">Products</a>
-                <a href="#about" class="w3-bar-item w3-button">About</a>
-                <script>document.write(`<a href="login.html" class="w3-bar-item w3-button">${params.get('name')}</a>`)</script>
+                <script> //log in button
+                    if (typeof userinfo.email == "undefined") {
+                        document.write(`<a href="login.html" class="w3-bar-item w3-button">Log In</a>`);
+                    } else {
+                        document.write(`<a href="./logout" class="w3-bar-item w3-button">${userinfo.name}</a>`);
+                    }
+                </script>
             </div>
         </div>
     </div>
@@ -85,7 +112,7 @@
         document.write(`<tr><td style="text-align: left; padding: 5px; padding-top: 30px; font-weight: bold;"><p style="font-weight: bold; text-align: left; padding-left: 10px;">Total</p></td><td><br /></td><td><br /></td><td style="text-align: left; padding-left: 25px; "><br /><p style="font-weight: bold; ">$${grandtotal.toFixed(2)}</p></td>`);
         document.write(`</table>`);</script>
     <script>
-        document.write(`<p id="statement">Thank You ${params.get('name')}!</p><br>`)
+        document.write(`<p id="statement">Thank You ${userinfo.name}!</p><br>`)
     </script>
  
     <p id="statement">OUR SHIPPING POLICY IS: A subtotal $0 - $49.99 will be $2 shipping. A subtotal $50 - $99.99 will be $5 shipping. Subtotals over $100 will be charged 5% of the subtotal amount.</p>

@@ -20,17 +20,19 @@ var urlstring; //var to store url string
 // get items
 var products_array = require(__dirname + "/products.json");
 
-var express = require("express");
-const req = require("express/lib/request");
-var app = express();
+//import packs
 var session = require('express-session');
+var express = require("express");
+var app = express();
+var cookieParser = require("cookie-parser");
 
-app.use(session({secret: "MySecretKey", resave: true, saveUninitialized: true}));
+const req = require("express/lib/request");
+
+app.use(session({secret: "MySecretKey", resave: true, saveUninitialized: true, cookie: { maxAge: 86400000 },}));
+app.use(cookieParser());
 
 //help from stackoverflow
-app.use(express.urlencoded({
-   extended: true
-}));
+app.use(express.urlencoded({extended: true}));
 
 // Routing
 
@@ -38,15 +40,27 @@ app.use(express.urlencoded({
 app.all("*", function(request, response, next) {
    console.log(request.method + " to " + request.path);
    if(typeof request.session.cart == "undefined"){
-    request.session.cart = Array.apply(null, Array(products_array.length)).map(Number.prototype.valueOf,0);
+    request.session.cart = new Array(products_array.length).fill(0);
     console.log(request.session.cart);
 }
+   // request.session.current_url = ''
    next();
 });
 
-app.post("/productData", function(request, response, next) {
+app.get("*", function(request, response, next) {
+    if(request.path.includes("cart.html") == true || request.path.includes("index.html") == true){
+        request.session.lastPage = request.originalUrl;
+    }
+    next();
+ });
+
+ app.post("/productData", function(request, response, next) {
     response.json(products_array);
-    
+ });
+
+ app.get("/logout", function(request, response, next) {
+    request.session.loginID = undefined;
+    response.redirect("back"); 
  });
 
  app.post("/cartData", function(request, response, next) {
@@ -54,19 +68,26 @@ app.post("/productData", function(request, response, next) {
     
  });
 
+ app.post("/getUserInfo", function(request, response, next) {
+     if(typeof request.session.loginID == "undefined"){
+        response.json({"email": undefined, "name": undefined});
+    } else {
+        response.json({"email": request.session.loginID, "name": users[request.session.loginID].name});
+    }
+ });
+
 app.post("/updateCart", function(request, response, next) {
     console.log(request.query);
     var prodIndex = request.query.pindex;
     var qty = request.query.qty;
-
     
     request.session.cart[prodIndex] = qty;
-    response.json({});
+    response.json(request.session.cart);
     console.log(request.session);
  });
 
 // process purchase request (validate quantities, check quantity available)
-app.post("/purchase", function(request, response, next) {
+app.post("/purchase", function(request, response, next) { //------------------------------- MAY NOT NEED----------------
    //set defaults
    var hasValue = false;
    var isValidQuantity = true;
@@ -100,9 +121,11 @@ app.post("/purchase", function(request, response, next) {
    // redirect to invoice and store quantities in query string
    let params = new URLSearchParams(request.body);
    urlstring = params; //saves url string to be used in log in and reg functions
-   if (isValidQuantity == true && hasValue == true) {
+   if (hasValue == true) {
        response.redirect("./login.html?" + params.toString());
    } else {
+       console.log(isValidQuantity);
+       console.log(hasValue);
        response.redirect("./index.html?" + params.toString());
    }
 });
@@ -111,12 +134,8 @@ app.post("/purchase", function(request, response, next) {
 var filename = "./userdata.json";
 
 const fs = require("fs");
-const {
-   url
-} = require("inspector");
-const {
-   userInfo
-} = require("os");
+const {url} = require("inspector");
+const {userInfo} = require("os");
 if (fs.existsSync(filename)) {
    //check
    let stats = fs.statSync(filename);
@@ -131,6 +150,7 @@ if (fs.existsSync(filename)) {
 } //-----------------
 
 //----------------------------------LOG IN------------------------------
+
 app.post("/login", function(request, response) {
    //----log in post-----
 
@@ -160,31 +180,36 @@ app.post("/login", function(request, response) {
    console.log(request.body);
 
    var loginerror = "";
+   //can make session vars with sess.username
+   //var backURL= history.back();
 
    // Process login form POST and redirect to logged in page if ok, back to login page if not
    if (typeof users[request.body.email.toLowerCase()] != "undefined") {
        //username exits so get stored pass and check if it matches password enterd    /* weirdly i cannot do request.body[password], fig out
        let params = new URLSearchParams(request.body);
-       if (
-           users[request.body.email.toLowerCase()].password == request.body.password
-       ) {
-           if (urlstring == undefined) {
-               //prevents going to invoice with no values
-               response.redirect("./index.html");
-           } else {
-               response.redirect("./invoice.html?" + urlstring + "&name=" + users[request.body.email.toLowerCase()].name);
-               console.log(urlstring);
-           }
+       if (users[request.body.email.toLowerCase()].password == request.body.password) {
+        //log in sucsess put email into session to note they logged in, then send to index
+        request.session.loginID = request.body.email.toLowerCase(); // to log out need to delete or make undefined 
+        response.redirect(request.session.lastPage); //same for reg
+        return;
        } else {
-           loginerror = "Error";
+           loginerror = "Error: Bad Password";
        }
    } else {
-       loginerror = "Error";
+       loginerror = "Error: Bad Email";
    }
 
-   response.redirect("./login.html?" + urlstring + "&loginerror=" + loginerror);
+   response.redirect("./login.html?" + urlstring + "&loginerror=" + loginerror); //giving error 
 });
 
+
+app.get("/invoice.html", function(request, response,next) {
+    if(typeof request.session.loginID == "undefined"){
+        response.redirect("./login.html");
+        return;
+    }
+    next();
+ });
 //-------------------------------------------------------------------------------
 
 //----------------------------Register-------------------------------------------

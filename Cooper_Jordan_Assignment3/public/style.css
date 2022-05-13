@@ -11,24 +11,21 @@ button {
     margin-top: 3px;
 }
 
-.boxdisplay {
-
-}
-
 #left {
     width: 50px;
     margin-right: 85px;
     margin-top: 3px;
 }
 
-input[type=submit] {
+#submit {
     background-color: #000000;
     border: none;
     color: white;
-    padding: 16px 50px;
     text-decoration: none;
-    margin: 4px 2px;
     cursor: pointer;
+
+    width: 20px;
+    font-size: 5px;
 }
 
 #footer2 {
@@ -51,6 +48,7 @@ input[type="text"] {
     position: absolute;
     transform: translate(-50%, 0);
     padding-left: 550px;
+    pointer-events: none;
 }
 
 #itembox{
@@ -123,32 +121,24 @@ input[type="text"] {
     color: rgb(0, 0, 0);
   }
   
-
   #cart{
     position: absolute;
     top: 41%;
-    left: 50%;
+    left: 87%;
     transform: translate(-50%, -50%);
     font-size: medium;
     font-size: 12px;
   }
-    
-/*
-    background-color: black;
-    color:white;
-    padding-left:5px;
-    padding-right:1px;
-    padding-top:1px;
-    padding-bottom:1px;
-    border-radius: 50px;
+
+  #homepagebox{
+      padding-bottom: -200px;
   }
 
-/*
-#footer{
-
-}
-
-#submit{
-   
-}
-*/
+  #checkoutbutton{
+      font-size: 14px;
+      margin-right: 13px;
+      margin-bottom: -10px;
+      margin-top: -10px;
+      
+  }
+    

@@ -8,8 +8,11 @@
     <link rel="stylesheet" href="templatestyle.css">
     <link rel="stylesheet" href="style.css">
     <script src="./functions.js"></script>
-    <meta http-equiv="refresh" content="9999999999.5">
+    <meta http-equiv="refresh" content="99999999.5">
     <script>
+        let params = (new URL(document.location)).searchParams;
+
+        var prodType = params.get("prodType");
 
         //help from prof port
         var products_array;
@@ -22,6 +25,12 @@
         loadJSON("./cartData", function (response) {
             // Parsing JSON string into object
             cart_array = JSON.parse(response);
+        });
+
+        var userinfo;
+        loadJSON("./getUserInfo", function (response) {
+            // Parsing JSON string into object
+            userinfo = JSON.parse(response);
         });
 
         //from lab12
@@ -51,8 +60,13 @@
         //help from prof port
         window.onload = function () {
             for (var i in products_array) {
+                if (products_array[i]["itemDescription"] != prodType) { // gets only a certain item from prod list 
+                    continue;
+                }
                 document.getElementById(`quantity${i}`).value = cart_array[i];
             }
+            displayCart();
+            var lastpage = window.location.href;
         }
 
 
@@ -69,22 +83,45 @@
             <!-- Float links to the right. Hide them on small screens -->
 
             <nav id=navbar class="w3-center">
-                <a href="gold.html" class="w3-bar-item w3-button">Gold</a>
-                <a href="diamond.html" class="w3-bar-item w3-button">Diamond</a>
-                <a href="pearl.html" class="w3-bar-item w3-button">Pearl</a>
+                <a href="index.html?prodType=gold" class="w3-bar-item w3-button">Gold</a>
+                <a href="index.html?prodType=diamond" class="w3-bar-item w3-button">Diamond</a>
+                <a href="index.html?prodType=pearl" class="w3-bar-item w3-button">Pearl</a>
             </nav>
 
             <div class="w3-right w3-hide-small">
+                
                 <div class="container w3-bar-item">
+                    <a id="checkoutbutton" class="w3-button" style="text-decoration: none;" href="invoice.html">Check Out</a>
                     <img src="pics\shoppingcart.png" alt="jewelry" style="width: 25px; height: 25px;">
                     <script>
-                        function getSum(total, num) {
-                            return total + Math.round(num);
+
+                        function displayCart() {
+                            var total = 0;
+                            for (let i in cart_array) {
+                                total += Number(cart_array[i]);
+                            }
+                            cart.innerHTML = total;
                         }
-                        document.write(`<div id="cart" class="w3-bar-item">${cart_array.reduce(getSum, 0)}</div>`);
+
                     </script>
+                    <a id="cart" class="w3-bar-item" href="cart.html">0</a>
                 </div>
-                <a href="login.html" class="w3-bar-item w3-button">Log In</a>
+                <script> //log in button
+                    if (typeof userinfo.email == "undefined") {
+                        document.write(`<a href="login.html" class="w3-bar-item w3-button">Log In</a>`);
+                    } else {
+                        document.write(`<a href="./logout" class="w3-bar-item w3-button">${userinfo.name}</a>`);
+                    }
+                </script>
+                <script>
+                    /*
+                if(sess.email) {
+                document.write(`<a href="login.html" class="w3-bar-item w3-button">${params.get('name')}</a>`);
+                } else {
+                document.write(`<a href="login.html" class="w3-bar-item w3-button">Log In</a>`);
+                }
+                */
+                </script>
             </div>
         </div>
     </div>
@@ -106,43 +143,36 @@
             <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Products For Sale</h3>
         </div>
 
-        <form name="product_form" action="./purchase" method="POST">
+        <form name="product_form" action="./invoice.html" method="POST">
             <script>
 
                 //function help from prof port
-                function setValue(index, increment) { //change name
+                function setValue(index, increment) { //change name------------
                     var quannum = document.getElementById("quantity" + index);
                     if (Number(quannum.value) + increment < 0) { //
                         quannum.value = Number(quannum.value);
                     } else if (Number(quannum.value) + increment > products_array[index].quantity_available) { // checks to see if it is more than avail
                         quannum.value = Number(quannum.value);
-                        location.reload();
+                        //location.reload();
                     } else {
                         quannum.value = Number(quannum.value) + increment;
-                        location.reload();
+                        //location.reload();
                     }
 
                     loadJSON(`./updateCart?pindex=${index}&qty=${quannum.value}`, function (response) {
                         // Parsing JSON string into object
-                        var response = JSON.parse(response);
+                        cart_array = JSON.parse(response);
+                        displayCart();
                     });
                 }
-
-                var productPageArray = [];
-
-                    for (var i = 0; i < products_array.length; i++){
-                        if (products_array[i]["itemNum"] == "1"){ // ---!--- need to get this to only pull certain items and add to an array via item num
-                        productPageArray.push(products_array[i]);
-                        }
-                }   
-
-                    // will return undefined if not found; you could return a default instead
-                
-
-                
-
+                // will return undefined if not found; you could return a default instead
+                var areProducts = false;
                 //displays items
-                for (var i = 0; i <= products_array.length; i++) {
+                for (let i in products_array) {
+                    if (products_array[i]["itemDescription"] != prodType) { // gets only a certain items from prod list 
+                        continue;
+                    }
+                    areProducts = true;
                     document.write(`                    
                     <div id=itembox class="w3-col">
                     <div class="w3-display-container">
@@ -152,12 +182,31 @@
                     <div class="w3-display-bottomright"><button type="button" class="minus" onclick="setValue(${i},-1)">-</button></div>
                     </div>
                     <div class="w3-display-topleft w3-black w3-padding">$${products_array[i].price}</div>
-                    <div id=quanbox class="quan"><input class="" type="text" id="quantity${i}" placeholder="0" name="quantity${i}" onkeyup="checkQuantityTextbox(this, ${i});"></div>
+                    <div id=quanbox class="quan"><input class="" type="text" id="quantity${i}" placeholder="0" name="quantity${i}"  onkeyup="checkQuantityTextbox(this, ${i});"></div>
                     <img src="${products_array[i].image}" alt="jewelry" style="width:350px; height:350px; border-style: solid;">
-                </div>
-    </div>
-    `);
+                    </div>
+                    </div>
+                    `);
                 }
+
+                if(areProducts == false){
+                var namearray = ["Diamond Products", "Gold Products", "Pearl Products"];
+                var typearray = ["diamond", "gold", "pearl"];
+                var picarray = ["/pics/diamond.jpg", "/pics/gold.jpg", "/pics/pearl.jpg"];
+                for(var i = 0; i < 3; i++){
+                document.write(`  
+                    <div id="homepagebox">                  
+                    <div id=itembox class="w3-col">
+                    <div class="w3-display-container">
+                    <div class="w3-display-bottomleft w3-black w3-padding w3-button"><a href="/index.html?prodType=${typearray[i]}" class="w3-button">${namearray[i]}</a></div>
+                    <img src="${picarray[i]}" alt="jewelry" style="width:350px; height:350px; border-style: solid;">
+                    </div>
+                    </div>
+                    </div>
+                    `);
+                }
+            }
+            
             </script>
 
 
@@ -166,10 +215,6 @@
 
 
     <!-- Footer -->
-    <footer id="footer2" class="w3-center  w3-margin-top-space">
-        <div id="submit" class="w3-bottom"><input type="submit" value="Check Out" name="purchase_submit"></div>
-    </footer>
-
     <footer id="footer" class="w3-center w3-black w3-padding-16 w3-bottom w3-margin-top-space">
         <p>By: Jordan Cooper in ITM 352</p>
     </footer>

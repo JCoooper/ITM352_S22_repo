@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="loginstyle.css">
     <link rel="stylesheet" href="templatestyle.css">
     <link rel="stylesheet" href="style.css">
-    <script src="./functions.js"></script>
+    <script src="./functions.js">//make sure this is in different files in order to keep car num/data</script> 
     <script type="text/javascript" src="server.js"></script>
     <title>Log In</title>
 </head>
@@ -47,13 +47,14 @@
             <!-- Float links to the right. Hide them on small screens -->
 
             <nav id=navbar class="w3-center">
-                <a href="gold.html" class="w3-bar-item w3-button">Gold</a>
-                <a href="diamond.html" class="w3-bar-item w3-button">Diamond</a>
-                <a href="pearl.html" class="w3-bar-item w3-button">Pearl</a>
+                <a href="index.html?prodType=gold" class="w3-bar-item w3-button">Gold</a>
+                <a href="index.html?prodType=diamond" class="w3-bar-item w3-button">Diamond</a>
+                <a href="index.html?prodType=pearl" class="w3-bar-item w3-button">Pearl</a>
             </nav>
 
             <div class="w3-right w3-hide-small">
                 <div class="container w3-bar-item">
+                    <a id="checkoutbutton" class="w3-button" style="text-decoration: none;" href="">Check Out</a>
                     <img src="pics\shoppingcart.png" alt="jewelry" style="width: 25px; height: 25px;">
                     <script>
                         function getSum(total, num) {
