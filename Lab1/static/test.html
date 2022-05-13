@@ -127,18 +127,9 @@
         <script>
             document.write(`<p id="statement">Thank You ${userinfo.name}!</p><br>`)
         </script>
-<form name="product_form" action="./checkout" method="POST">
-    <script>
-        
-    loadJSON(`./checkout?inv_str=${invoice_str}`, function (response) {
-        // Parsing JSON string into object
-        inv_str2 = JSON.parse(response);
-    });
-    
-    </script>
-
-    <input id="submitbutton" type="submit" value="Submit" id="submit">
-</form>
+    <form name="product_form" action="./checkout" method="GET">
+        <input id="submitbutton" type="submit" value="Submit" id="submit">
+    </form>
      
         <p id="statement">Thank you again for shopping with us, our shipping policy is as follows, A subtotal $0 - $49.99 will be $2 shipping. A subtotal $50 - $99.99 will be $5 shipping. Subtotals over $100 will be charged 5% of the subtotal amount. Enjoy you items and we hope you shop here again!</p>
     

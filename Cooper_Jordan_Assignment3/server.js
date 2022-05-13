@@ -26,6 +26,7 @@ var products_array = require(__dirname + "/products.json");
 //import packs
 var session = require('express-session');
 var express = require("express");
+var nodemailer = require("nodemailer");
 var app = express();
 var cookieParser = require("cookie-parser");
 
@@ -112,6 +113,44 @@ if (fs.existsSync(filename)) {
 
 //--------------------------------INVOICE EMAIL------------------------
 //help from code exmaples on class site
+app.get("/checkout", function (request, response) {
+    // Generate HTML invoice string
+      var title_str = `Thank you for your order!<table border><th>Quantity</th><th>Item</th>`;
+      var shopping_cart = request.session.cart;
+
+      var invoice_str = request.query.inv_str;
+
+      invoice_str;
+
+    // Set up mail server. Only will work on UH Network due to security restrictions
+      var transporter = nodemailer.createTransport({
+        host: "mail.hawaii.edu",
+        port: 25,
+        secure: false, // use TLS
+        tls: {
+          // do not fail on invalid certs
+          rejectUnauthorized: false
+        }
+      });
+    
+      var user_email = 'jcooper2@hawaii.edu';
+      var mailOptions = {
+        from: 'jcooper2@hawaii.edu',
+        to: user_email,
+        subject: 'Receipt For Your Order At Jewels Co.',
+        html: invoice_str
+      };
+    
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          invoice_str += '<br>There was an error and your invoice could not be emailed :(';
+        } else {
+          invoice_str += `<br>Your invoice was mailed to ${user_email}`;
+        }
+        response.send(invoice_str);
+      });
+     
+    });
 
 //---------------------------------------------------------------------
 

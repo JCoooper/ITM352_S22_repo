@@ -3,6 +3,7 @@
     "cookie-parser": "^1.4.6",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.5",
+    "nodemailer": "^6.7.5"
   }
 }
