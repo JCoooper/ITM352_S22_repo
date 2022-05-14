@@ -190,7 +190,7 @@ app.get("/checkout", function (request, response, next) {
 
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      title_str +=`<br><p>There was an error and your invoice could not be emailed :( </p><a href="index.html" class="w3-button"><b>Click Here To Go To Home Page!</a>`;
+      title_str =`<br><p>There was an error and your invoice could not be emailed :( </p><a href="index.html" class="w3-button"><b>Click Here To Go To Home Page!</a>`;
     } else {
       title_str += `<br><p>Your invoice was mailed to ${user_email}</p><a href="index.html" class="w3-button"><b>Click Here To Go To Home Page!</a>`;
       request.session.cart = undefined; //clear cart after transaction 
@@ -235,9 +235,7 @@ app.post("/login", function (request, response) {
   if (typeof users[request.body.email.toLowerCase()] != "undefined") {
     //username exits so get stored pass and check if it matches password enterd    /* weirdly i cannot do request.body[password], fig out
     let params = new URLSearchParams(request.body);
-    if (
-      users[request.body.email.toLowerCase()].password == request.body.password
-    ) {
+    if (users[request.body.email.toLowerCase()].password == request.body.password) {
       //help from prof port
       //log in sucsess put email into session to note they logged in, then send to index
       request.session.loginID = request.body.email.toLowerCase(); // to log out need to delete or make undefined
