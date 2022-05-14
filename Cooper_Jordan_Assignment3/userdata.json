@@ -3,6 +3,10 @@
         "name": "test",
         "password": "test"
     },
+    "jcooper2@hawaii.edu": {
+        "name": "Jordan",
+        "password": "test"
+    },
     "itm352@hawaii.edu": {
         "name": "itm352",
         "password": "grader"

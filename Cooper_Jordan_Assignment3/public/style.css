@@ -123,7 +123,7 @@ input[type="text"] {
   
   #cart{
     position: absolute;
-    top: 41%;
+    top: 39%;
     left: 87%;
     transform: translate(-50%, -50%);
     font-size: medium;
@@ -141,4 +141,6 @@ input[type="text"] {
       margin-top: -10px;
       
   }
+
+
     

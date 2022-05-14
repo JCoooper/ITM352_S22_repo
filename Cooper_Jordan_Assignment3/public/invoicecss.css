@@ -1,7 +1,30 @@
 #statement{ 
     text-align: center;
     font-weight: bold;
-
-
-  
 }
+
+#transconfirm{
+    background-color: #000000; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    
+  }
+
+  #transconfirm:hover{
+    background-color: rgb(140, 140, 140);
+  }
+
+  .notrans{
+      margin-bottom: 4px;
+  }
+
+  #acceptornot{
+    margin: 25px;
+    width: 350px;
+    height: 200px;
+  }

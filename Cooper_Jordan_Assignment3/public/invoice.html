@@ -1,6 +1,6 @@
 <script>
     // !-- By: Jordan Cooper, File Use: This is the invoice file responsible for displaying and emailing invoices --!
-    //help from professor port and sean
+    //help from professor port and sean sumida
     </script>
     <script src="./product_data.js"></script>
     <script src="./functions.js"></script>
@@ -88,6 +88,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="invoicecss.css">
         <link rel="stylesheet" href="templatestyle.css">
+        <meta http-equiv="refresh" content="9999999.5">
         <title>invoice</title>
     </head>
     
@@ -124,20 +125,22 @@
           
             </script>
           
-        <script>
-            document.write(`<p id="statement">Thank You ${userinfo.name}!</p><br>`)
-        </script>
-<form name="product_form" action="./checkout" method="POST">
+
+<form name="product_form" action="./checkout" method="GET">
     <script>
-        
-    loadJSON(`./checkout?inv_str=${invoice_str}`, function (response) {
+        var test = "hello";
+    loadJSON(`./checkout?inv_str=${test}`, function (response) {
         // Parsing JSON string into object
         inv_str2 = JSON.parse(response);
     });
-    
     </script>
 
-    <input id="submitbutton" type="submit" value="Submit" id="submit">
+    <div id="statement">
+    <p>Do You Accept This Transaction?:</p>
+    <input id="transconfirm" type="submit" value="Yes" id="submit">
+    <a id="transconfirm" class="notrans" style="text-decoration: none;" href="index.html">No</a>
+    </div>
+
 </form>
      
         <p id="statement">Thank you again for shopping with us, our shipping policy is as follows, A subtotal $0 - $49.99 will be $2 shipping. A subtotal $50 - $99.99 will be $5 shipping. Subtotals over $100 will be charged 5% of the subtotal amount. Enjoy you items and we hope you shop here again!</p>
