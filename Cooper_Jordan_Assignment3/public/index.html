@@ -147,7 +147,7 @@
             <script>
 
                 //function help from prof port
-                function setValue(index, increment) { //change name------------
+                function setValue(index, increment) { //increases items in cart as well as checks for valid data
                     var quannum = document.getElementById("quantity" + index);
                     if (Number(quannum.value) + increment < 0) { //
                         quannum.value = Number(quannum.value);

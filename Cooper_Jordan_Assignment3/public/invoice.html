@@ -59,12 +59,10 @@
                     subtotal = subtotal + extended_price;
                     taxamount = subtotal / taxrate;
                     grandtotal = subtotal + taxamount;
-                    if (subtotal <= 50) {
-                        shippingamount = 2;
-                    } else if (subtotal > 50 && subtotal <= 100) {
-                        shippingamount = 5;
+                    if (subtotal <= 10000) {
+                        shippingamount = 1000;
                     } else {
-                        shippingamount = (subtotal / 100) * 5;
+                        shippingamount = 0;
                     }
                     grandtotal = grandtotal + shippingamount;
                     document.write(`<tr><td style="text-align: left; padding: 15px;">${products_array[i].name}</td><td>${cart_array[i]}</td><td>$${products_array[i].price.toFixed(2)}</td><td style="text-align: left; padding-left: 25px;">$${extended_price.toFixed(2)}</td>`);
@@ -143,7 +141,7 @@
 
 </form>
      
-        <p id="statement">Thank you again for shopping with us, our shipping policy is as follows, A subtotal $0 - $49.99 will be $2 shipping. A subtotal $50 - $99.99 will be $5 shipping. Subtotals over $100 will be charged 5% of the subtotal amount. Enjoy you items and we hope you shop here again!</p>
+        <p id="statement">Thank you again for shopping with us, our shipping policy is as follows, Any transaction with a subtotal less than $10,000 has a $1000 shipping fee, everything over $10,000 qualifies for free shipping!</p>
     
     </body>
     </html>
